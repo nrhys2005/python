@@ -1,25 +1,7 @@
-infile = open("data.txt", "r")
-outfile = open("output.txt","a")
-
-print("입력 파일 이름 : data.txt")
-print("출력 파일 이름 : output.txt")
-num_sum = 0
-count = 0
-for line in infile:
-    line = line.rstrip()
-    num_sum += float(line)
-    count+=1
-outfile.write("합계="+str(num_sum)+"\n")
-outfile.write("평균="+str(num_sum/count))
-outfile.close()
-infile.close()
-
-
 from tkinter import *
 import pickle
 phone_book = {}
-
-
+index = 0;
 window = Tk()
 label1 = Label(window,text="이름")
 label2 = Label(window,text="전화번호")
@@ -40,10 +22,54 @@ def b1_click():
     edit_name.delete(0,END)
     edit_phone.delete(0,END)
 def b2_click():
-    
+    file = open( "phone_book.dat", "rb" )
+    global phone_book
+    global index
+    phone_book = pickle.load( file )
+    book_list = list(phone_book.keys())
+    if(len(book_list)!=0):
+        edit_name.delete(0,END)
+        edit_phone.delete(0,END)
+        edit_name.insert(0,book_list[0])
+        edit_phone.insert(0,phone_book[book_list[0]])
+    index=0
 def b3_click():
+    file = open( "phone_book.dat", "rb" )
+    global phone_book
+    global index
+    phone_book = pickle.load( file )
+    book_list = list(phone_book.keys())
+    if(len(book_list)!=0 and index+1<len(book_list)):
+        index+=1
+        edit_name.delete(0,END)
+        edit_phone.delete(0,END)
+        edit_name.insert(0,book_list[index])
+        edit_phone.insert(0,phone_book[book_list[index]])
+    
 def b4_click():
+    file = open( "phone_book.dat", "rb" )
+    global phone_book
+    global index
+    phone_book = pickle.load( file )
+    book_list = list(phone_book.keys())
+    if(len(book_list)!=0 and index-1>=0):
+        index-=1
+        edit_name.delete(0,END)
+        edit_phone.delete(0,END)
+        edit_name.insert(0,book_list[index])
+        edit_phone.insert(0,phone_book[book_list[index]])
 def b5_click():
+    file = open( "phone_book.dat", "rb" )
+    global phone_book
+    global index
+    phone_book = pickle.load( file )
+    book_list = list(phone_book.keys())
+    if(len(book_list)!=0):
+        index=len(book_list)-1
+        edit_name.delete(0,END)
+        edit_phone.delete(0,END)
+        edit_name.insert(0,book_list[index])
+        edit_phone.insert(0,phone_book[book_list[index]])
 def b6_click():
     file = open( "phone_book.dat", "rb" )
     global phone_book
